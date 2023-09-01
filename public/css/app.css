@@ -1,0 +1,25 @@
+@import url('https://fonts.googleapis.com/css2?family=Oswald&family=Wix+Madefor+Text&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Wix+Madefor+Text&display=swap');
+.title{
+    font-family: 'Oswald', sans-serif;
+}
+*{
+    font-family: 'Wix Madefor Text', sans-serif;
+}
+.link{
+    font-family: 'Wix Madefor Text', sans-serif;
+}
+nav a{
+    font-family: 'Wix Madefor Text', sans-serif;
+}
+.material-symbols-outlined {
+  font-variation-settings:
+  'FILL' 0,
+  'wght' 400,
+  'GRAD' 0,
+  'opsz' 48;
+  font-size:60px;
+}
+button{
+    background-color: #eb5e28;
+}
