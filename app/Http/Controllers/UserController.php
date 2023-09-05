@@ -4,13 +4,11 @@ namespace App\Http\Controllers;
 
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 
 class UserController extends Controller
 {
-    public function create(){
-        return view('user/create');
-    }
     public function save(Request $request){
        //dd($request->all());
         
@@ -31,8 +29,28 @@ class UserController extends Controller
             'birthDate'=>$request->date
         ]);
 
-
         
-        return redirect('/');
+
+
+        $this->authenticate($request);
     }
+
+
+    public function authenticate(Request $request){
+        $credentials= $request->validate([
+            'email'=>'required|email',
+            'password'=>'required'
+        ]);
+
+        if(Auth::attempt($credentials)){
+            $request->session()->regenerate();
+
+            return redirect()->intended('/');
+        }
+
+        return back()->withErrors([
+            'email'=> 'The provided credentials do not match our records.',
+            ])->onlyInput('email');
+    }
+
 }

@@ -11,7 +11,7 @@
     <link rel="stylesheet" href="{{asset('css/app.css')}}">
     <title>@yield('title')</title>
 </head>
-<body style="background-color: #fffcf2">
+<body style="background-color: #ccc5b9">
 
     <nav class="navbar navbar-expand-lg navbar-dark " style="background-color: #403d39;">
         <a class="navbar-brand p-0 b-0 " href="#">
@@ -31,15 +31,18 @@
           <ul class="navbar-nav ml-auto">
             
             <li class="nav-item active">
-              <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
+              <a class="nav-link" href="{{route('home')}}">Home <span class="sr-only">(current)</span></a>
             </li>
 
             <li class="nav-item">
               <a class="nav-link" href="#">Link</a>
             </li>
             
-            <li>
-              <a href="{{route('register')}}">register</a>
+            <li class="nav-item">
+              <a class="nav-link" href="{{route('register')}}">register</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="{{route('login')}}">Log in</a>
             </li>
             {{-- <li class="nav-item dropdown">
                 <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">

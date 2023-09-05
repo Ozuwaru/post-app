@@ -1,8 +1,8 @@
 <?php
 
 use App\Http\Controllers\UserController;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
-
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -15,7 +15,25 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    return view('home');
+    if(Auth::check()){
+
+        return view('home');
+    }
+    return redirect('login');
+})->name('home');
+
+Route::controller(UserController::class)->group(function(){
+    
 });
-Route::get('register',[UserController::class,'create'])->name('register');
+Route::get('register',function (){
+    return view('user/create');
+})->name('register');
+
+
 Route::post('save',[UserController::class,'save'])->name('save');
+
+Route::get('login',function(){
+    return view('user/login');
+})->name('login');
+
+Route::post('send',[UserController::class,'authenticate'])->name('send');
