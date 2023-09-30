@@ -3,7 +3,7 @@
 @section('content')
 <div class="content  mt-4 w-65 p3 jumbotron mx-auto" style="background-color: #fffcf2">
     <h3 class="title">¿Que esta pensando hoy?</h3>
-    <form action="#" method="POST">
+    <form action="{{route('postCreate')}}" method="POST" enctype="multipart/form-data">
       @csrf
       
       <div class="form-group row">
@@ -11,6 +11,16 @@
         <div class="col-sm-10">
           <input type="text" class="form-control" name="text" minlength="8" placeholder="Escriba cualquier cosa y compartala con sus amigos"required>
         </div>
+      </div>
+
+
+      <div class="form-group">
+        <label for="img">Imagen: </label>
+        <input type="file" class="form-control" name="img" id="img_path">
+      </div>
+      <div class="form-group">
+        <label for="video">Video: </label>
+        <input type="file" class="form-control" name="video" id="video_path">
       </div>
       
 

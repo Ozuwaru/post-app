@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\PostController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
@@ -22,18 +23,25 @@ Route::get('/', function () {
     return redirect('login');
 })->name('home');
 
+
+
+
 Route::controller(UserController::class)->group(function(){
+    Route::post('save','save')->name('save');
+    Route::post('send','authenticate')->name('send');
     
-});
-Route::get('register',function (){
-    return view('user/create');
-})->name('register');
+    Route::get('register',function (){
+        return view('user/create');
+    })->name('register');
+    
+    
+    
+    Route::get('login',function(){
+        return view('user/login');
+    })->name('login');
+
+});    
 
 
-Route::post('save',[UserController::class,'save'])->name('save');
 
-Route::get('login',function(){
-    return view('user/login');
-})->name('login');
-
-Route::post('send',[UserController::class,'authenticate'])->name('send');
+Route::post('post/create',[PostController::class,'create'])->name('postCreate');

@@ -32,7 +32,7 @@ class UserController extends Controller
         
 
 
-        $this->authenticate($request);
+        return $this->authenticate($request);
     }
 
 
