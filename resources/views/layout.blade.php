@@ -38,12 +38,21 @@
               <a class="nav-link" href="#">Link</a>
             </li>
             
+            
+            @if (Auth::check())
+            
             <li class="nav-item">
-              <a class="nav-link" href="{{route('register')}}">register</a>
+              <a class="nav-link" href="{{route('logout')}}">Logout</a>
             </li>
-            <li class="nav-item">
-              <a class="nav-link" href="{{route('login')}}">Log in</a>
-            </li>
+            @else
+              <li class="nav-item">
+                <a class="nav-link" href="{{route('register')}}">register</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="{{route('login')}}">Log in</a>
+              </li>
+                
+            @endif
             {{-- <li class="nav-item dropdown">
                 <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                   Dropdown

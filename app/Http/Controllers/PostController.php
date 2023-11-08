@@ -26,24 +26,17 @@ class PostController extends Controller
         ];
 
         $request->validate($rules);
-        
-        $filePath= ;
-        dd($filePath);
-        $post= new Post;
-        $post->text = $request->text;
-        $post->user_id= Auth::id();
-        $post->videoPath= $this->storeUploads($request->file('video'));
-        $post->imgPath= $this->storeUploads($request->file('img'));
-        $post->save();
+
+        Post::createPost($request);
+        return redirect('');
     }
-
-    public function storeUploads(Request $request){
-        if($request->file('img')){
-            $filePath= $request->file('img')->store('images');
-        }else{
-            $filePath= $request->file('video')->store('videos');
-
-        }
-        return $filePath;
+    public function load(){
+            if(Auth::check()){
+                $posts= Post::getPosts(Auth::id());
+                //dd($posts);
+                return view('home',['posts'=>$posts]);
+            }
+            return redirect('login');
+        
     }
 }

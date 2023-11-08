@@ -15,13 +15,7 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    if(Auth::check()){
-
-        return view('home');
-    }
-    return redirect('login');
-})->name('home');
+Route::get('/',[PostController::class,'load'])->name('home');
 
 
 
@@ -29,6 +23,7 @@ Route::get('/', function () {
 Route::controller(UserController::class)->group(function(){
     Route::post('save','save')->name('save');
     Route::post('send','authenticate')->name('send');
+    Route::get('logout','logout')->name('logout');
     
     Route::get('register',function (){
         return view('user/create');
