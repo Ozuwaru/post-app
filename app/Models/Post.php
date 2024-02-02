@@ -3,11 +3,13 @@
 namespace App\Models;
 
 use App\Providers\CommentInfo;
+use Illuminate\Contracts\Database\Query\Builder;
 use Illuminate\Http\Request;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
 class Post extends Model
 {
@@ -74,7 +76,24 @@ class Post extends Model
 
 
         public static function getPosts($userid){
-            $posts= Post::where('user_id',$userid)->get();
+            //$posts= Post::where('user_id',$userid)->get();
+
+            $posts = Post::hydrate((DB::table('posts')
+                ->select('id','text','imgPath','user_id','updated_at')
+
+                ->whereExists(function (Builder $query) use ($userid){
+
+                    $query->select(DB::raw(1))
+                    ->from('followers')
+                    ->where('followers.user_id',"{$userid}")
+                    ->whereColumn('followers.following','posts.user_id');
+
+                })
+                ->orWhere('user_id','=',$userid)
+                
+                ->get())->all());
+            //$posts = Post::hydrate($data->all());
+            // dd($posts);
             foreach($posts as $post){
                 $post->userName = User::select('name')->where('id',$post->user_id)->pluck('name')->first();
                 ///dd($post->userName);
@@ -83,6 +102,7 @@ class Post extends Model
         }
 
         public static function deleteWithId(int $id){
+            
             $post = Post::find($id);
 
             if(Storage::exists('public'.$post->imgPath)){

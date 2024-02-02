@@ -2,9 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Follower;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Session;
 
@@ -59,5 +61,26 @@ class UserController extends Controller
         Session::flush();
         return redirect('login');
     }
+
+    public static function search(Request $request){
+        //dd($request->search);
+        $users =User::getUserToFollow(Auth::id(),$request->search);
+
+        /**
+         * Aqui debo ecribir un query el cual me va a devolver los usuarios que el usuario no 
+         * haya agregado como amigos.
+         * Todavia falta limitar la busqueda por nombre.
+         */
+        if($request->ajax()){
+            $view = view('user.data',compact('users'))->render();
+            return response()->json(['html'=>$view]);
+        }
+
+        return view('user.search',compact('users'));
+        
+        
+    }
+
+    
 
 }

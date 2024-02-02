@@ -47,7 +47,8 @@ class PostController extends Controller
     }
     
     public function load(){
-        if(Auth::check()){
+        
+        //if(Auth::check()){
             $posts= Post::getPosts(Auth::id());
             foreach($posts as $post){
 
@@ -60,9 +61,7 @@ class PostController extends Controller
                 //dd($post);
             }
             //dd($posts);
-            return view('home',['posts'=>$posts]);
-        }
-        return redirect('login');
+            return view('home',['user_id'=>Auth::id(),'posts'=>$posts]);
         
     }
 
