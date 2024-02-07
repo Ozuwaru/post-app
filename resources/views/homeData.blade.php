@@ -5,7 +5,7 @@
     @foreach ( $posts->all() as $post)
    
     <hr class="my-4">
-        <div class=" post rounded pt-3 pb-3 mx-auto g-0  "style="background-color: #F0DFBC">
+        <div class=" post rounded pt-3 pb-3 mx-auto g-0  "style="background-color: #F0DFBC"">
           <div class="row container ">
 
             <div class="col-2">
@@ -21,16 +21,16 @@
 
             <div class="col-2" >
 
-<!-- Button trigger modal -->
-@if ($user_id==$post->user_id)
-  @include('dropdown',[
-    'containerClass'=>'box',
-    'deleteRoute'=>'postDelete',
-    'updateRoute'=>'postUpdate',
-    'row'=>$post,
-    'c'=>$c
-  ])
-@endif
+              <!-- Button trigger modal -->
+              @if ($user_id==$post->user_id)
+                @include('dropdown',[
+                  'containerClass'=>'box',
+                  'deleteRoute'=>'postDelete',
+                  'updateRoute'=>'postUpdate',
+                  'row'=>$post,
+                  'c'=>$c
+                ])
+              @endif
 
               
             </div>
@@ -69,9 +69,8 @@
                   </div>
 
           </form>
-        </div>
-
-            @php
+          
+          @php
                 $iC=0;
             @endphp
             @foreach ($post->comments as $comment)
@@ -114,6 +113,8 @@
             @endphp
             @endforeach 
 
+        </div>
+      </div>
       @php
           
           $c++;
