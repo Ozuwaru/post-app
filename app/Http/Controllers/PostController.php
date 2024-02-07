@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Comment;
 use App\Models\Post;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Validation\Rules\File;
@@ -46,21 +47,15 @@ class PostController extends Controller
 
     }
     
-    public function load(){
+    public function load(Request $request){
         
-        //if(Auth::check()){
             $posts= Post::getPosts(Auth::id());
-            foreach($posts as $post){
-
-                $comments = Comment::getCurrentPostComment(($post->id));
-                //dd($comments);
-                foreach($comments as $c){
-                    //dd($c);
-                    $post->addComments($c);
-                }
-                //dd($post);
+           // dd($user);
+            if($request->ajax()){
+                $view = view('homeData',['user_id'=>Auth::id(),'posts'=>$posts])->render();
+                return response()->json(['html'=>$view]);
             }
-            //dd($posts);
+            
             return view('home',['user_id'=>Auth::id(),'posts'=>$posts]);
         
     }

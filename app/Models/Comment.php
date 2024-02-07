@@ -27,9 +27,22 @@ class Comment extends Model
     }
 
     public static function getCurrentPostComment(int $Postid){
-        $comments= Comment::select('user_id','text','updated_at')->where('post_id',$Postid)->get();
-        return $comments;
+        $comments= Comment::select('id','user_id','text','updated_at')->where('post_id',$Postid)->get();
+        foreach($comments as $comment){
+            $comment->userN = User::where('id', $comment->user_id)->select('name')->first()->name;
+        }
+        return $comments->all();
 
+    }
+
+    public static function deleteComment(int $id){
+        $comment = Comment::where('id',$id)->first();
+        $comment->delete();
+    }
+    public static function updateComment(int $id,string $text){
+        $comment = Comment::where('id',$id)->first();
+        $comment->text = $text;
+        $comment->save();
     }
     use HasFactory;
 }

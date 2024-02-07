@@ -4,7 +4,8 @@ namespace App\Models;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
 
-use GuzzleHttp\Psr7\Request;
+use Illuminate\Http\Request;
+
 use Illuminate\Contracts\Database\Query\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\HasMany;
@@ -12,6 +13,7 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Support\Facades\DB;
 use Laravel\Sanctum\HasApiTokens;
+use Illuminate\Support\Facades\Hash;
 
 class User extends Authenticatable
 {
@@ -26,7 +28,8 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
-        'birthDate'
+        'birthDate',
+        'imgPath'
     ];
 
     /**
@@ -48,23 +51,30 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
     ];
 
+    public static function createUser(Request $request){
+
+        $path= null;
+        if($request->hasFile('img')){
+            $path= $request->file('img')->store('public/User/Images');
+            
+            $path = str_replace('public','',$path);
+            
+        }
+        $user= User::create([
+            'name'=>$request->name,
+            'email'=>$request->email,
+            'password'=>Hash::make($request->password),
+            'birthDate'=>$request->date,
+            'imgPath'=>$path
+        ]);
+    }
+
 
     public function followers():HasMany{
         return $this->hasMany(Follower::class);
     }
 
     public static function  getUserToFollow(int $id, $name){
-        // $followed = Follower::where('user_id',$id)->get()->pluck('following');
-        // if($name!=null){
-            
-        //     $users = User::whereNotIn('id',$followed)->where('name','LIKE',"%{$name}%")->paginate(10);
-        // }else{
-
-        //     $users = User::whereNotIn('id',$followed)->paginate(10);
-        // }
-
-        // return $users;
-
 
 
         if($name!=null){
@@ -90,6 +100,8 @@ class User extends Authenticatable
         
         return $users;
     }
+
+
 
 
 

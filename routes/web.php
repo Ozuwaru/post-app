@@ -32,12 +32,18 @@ Route::group(['middleware'=>'auth'],function(){
     Route::post('follow',[FollowerController::class,'follow'])->name('follow');
     
     
+    Route::controller(PostController::class)->group(function(){
+
+        Route::delete('post/delete','delete')->name('postDelete');
+        Route::patch('post/update','update')->name('postUpdate');
+        Route::post('post/create','create')->name('postCreate');
+        Route::get('/','load')->name('home');
+    });
     
-    Route::delete('delete',[PostController::class,'delete'])->name('delete');
-    Route::patch('update',[PostController::class,'update'])->name('update');
-    Route::post('post/create',[PostController::class,'create'])->name('postCreate');
-    Route::get('/',[PostController::class,'load'])->name('home');
-    
-    
-    Route::post('saveComment',[CommentController::class,'saveComment'])->name('saveComment');
+    Route::controller(CommentController::class)->group(function(){
+        Route::post('comment/create','commentCreate')->name('commentCreate');
+        Route::patch('comment/update','commentUpdate')->name('commentUpdate');
+        Route::delete('comment/delete','commentDelete')->name('commentDelete');
+
+    });
 });

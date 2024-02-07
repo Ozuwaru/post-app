@@ -7,13 +7,12 @@ use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Session;
 
 class UserController extends Controller
 {
     public function save(Request $request){
-       //dd($request->all());
+       
         
         $rules=[
             'name'=>'required|string|max:255',
@@ -23,14 +22,9 @@ class UserController extends Controller
 
         ];
         $request->validate($rules);
+        User::createUser($request);
 
-
-        $user= User::create([
-            'name'=>$request->name,
-            'email'=>$request->email,
-            'password'=>Hash::make($request->password),
-            'birthDate'=>$request->date
-        ]);
+        
 
         
 

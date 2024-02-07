@@ -1,0 +1,65 @@
+
+
+<div class="{{$containerClass}}">
+
+  <div class="dropdown">
+    <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+      ...
+    </button>
+    <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+
+      <form action="{{route($deleteRoute)}}"  method="post" id="form{{$c}}">
+        @csrf
+        @method('delete')
+      
+        <div class="form-inline">
+          <input  type="hidden" value="{{$row->id}}" name="id">
+          
+        </div>
+         
+      
+        <a class="dropdown-item" href="javascript:{}" onclick="document.getElementById('form{{$c}}').submit(); return false;">Delete</a>
+      </form>
+
+      <button type="button" class="dropdown-item" data-toggle="modal" data-target="#{{$c}}">
+        Edit
+      </button>
+      
+    </div>
+  </div>
+
+
+  
+  
+</div>
+
+<!-- Modal -->
+<div class="modal fade" id="{{$c}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Modify yout comment</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form action="{{route($updateRoute)}}" method="POST">
+          @csrf
+          @method('patch')
+          <div class="form-group row">
+            <label for="text" class="col-sm-2 col-form-label"></label>
+              <input type="text" class="form-control" name="text" minlength="8" value="{{$row->text}}">
+              <input  type="hidden" value="{{$row->id}}" name="id">
+
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            <button type="submit" class="btn btn-primary">Save changes</button>
+          </div>
+        </form>
+      </div>
+     
+    </div>
+  </div>
+</div>

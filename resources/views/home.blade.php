@@ -55,177 +55,85 @@
             </div>
       </form>
     </div>
-@php
-    
-
- $c=1;
-@endphp
-    @foreach ($posts as $post)
-    <hr class="my-4">
-        <div class=" post rounded pt-3 pb-3 mx-auto g-0  "style="background-color: #F0DFBC">
-          <div class="row container ">
-
-            <div class="col-2">
-              <img src="{{asset('storage/'.$post->imgPath)}}" class="rounded img-fluid mb-3" alt="userImg" style="width: 300px; height: 70px; object-fit: cover; object-position: 50% 0;">
-            </div>
-
-
-            <div class="col-8">
-              <a href="#" class="font-weight-bold">{{$post->userName}}</a>
-              <p style="word-wrap:break-word;">{{$post->text}}</p>
-            </div>
-
-
-            <div class="col-2" >
-
-<!-- Button trigger modal -->
-@if ($user_id==$post->user_id)
-    
-<div class="box">
-
-  <form action="{{route('delete')}}"  method="POST">
-    @csrf
-    @method('delete')
-  
-    <div class="form-inline">
-      <input  type="hidden" value="{{$post->id}}" name="id">
-      
-    </div>
-     
-    <div class="form-inline">
-      <button type="submit" class="btn btn-danger">Delete</button>
-    </div>
-  
-  </form>
-  
-  <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#{{$c}}">
-    Edit
-  </button>
-</div>
-
-<!-- Modal -->
-<div class="modal fade" id="{{$c}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-  <div class="modal-dialog" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLabel">Modify yout comment</h5>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </div>
-      <div class="modal-body">
-        <form action="update" method="POST">
-          @csrf
-          @method('patch')
-          <div class="form-group row">
-            <label for="text" class="col-sm-2 col-form-label"></label>
-              <input type="text" class="form-control" name="text" minlength="8" value="{{$post->text}}">
-              <input  type="hidden" value="{{$post->id}}" name="id">
-
-          </div>
-          <div class="modal-footer">
-            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-            <button type="submit" class="btn btn-primary">Save changes</button>
-          </div>
-        </form>
-      </div>
-     
-    </div>
+  <div id="data-wrapper">
+    @include('homeData')
   </div>
+  <!-- Data Loader -->
 </div>
-@endif
+<div class="auto-load text-center" style="display: none;">
+  <svg version="1.1" id="L9" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+      x="0px" y="0px" height="60" viewBox="0 0 100 100" enable-background="new 0 0 0 0" xml:space="preserve">
+      <path fill="#000"
+          d="M73,50c0-12.7-10.3-23-23-23S27,37.3,27,50 M30.9,50c0-10.5,8.5-19.1,19.1-19.1S69.1,39.5,69.1,50">
+          <animateTransform attributeName="transform" attributeType="XML" type="rotate" dur="1s"
+              from="0 50 50" to="360 50 50" repeatCount="indefinite" />
+      </path>
+  </svg>
+</div>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
-              
-            </div>
-
-
-          </div>
-          
-          <div class="row mx-auto">
-
-              <img src="{{asset('storage/'.$post->imgPath)}}" alt="userImg" class="rounded  d-block px-3 py-3 img-fluid" style="background-color: rgb(209, 194, 171)"  width="100%" >
-
-            
-          </div>
-
-
-          <form action="{{route('saveComment')}}" method="POST" enctype="multipart/form-data">
-
-            <div class="form-group row pt-4 mx-auto">
-              
-              <div class="col-sm-2 ">
-
-                {{-- //<img src="{{asset('storage/'.$post->imgPath)}}" class="rounded pt-1" alt="userImg" style="object-fit: cover;"> --}}
-              <img src="{{asset('storage/'.$post->imgPath)}}" class="rounded img-fluid" alt="userImg" style="width: 3pz; height: 5pz; object-fit: cover; object-position: 50% 0;">
+<script>
 
 
-              </div>
-              <div class="col-sm-10  py-auto mx-auto">
 
-                <form action="{{route('saveComment')}}" method="POST">
-                  <input  type="hidden" value="{{$post->id}}" name="post_id">
-                  <div class="form-group py-2">
-                    <input type="text" class="form-control " name="comment" id="comment" placeholder="Write your comment">
-                      @csrf
-                    </div>
-                  </div>
 
-                </form>
-        </div>
 
- 
-            @foreach ($post->CommentArr as $comment)
-            
-            <div class="container row py-3 border-top border-danger  mx-auto" style="border-width-5">
 
-              <div class="col-sm-1">
-                {{-- AQUI VA LA IMAGEN DE CADA USUARIO --}}
-                <img src="{{asset('storage/'.$post->imgPath)}}" class="rounded" alt="userImg" width="150%">
 
-              </div>
-              <div class="col-sm-11">
-                <div class="col-sm-12">
-                  <div class="form-group row ">
-                    <div class="col-sm-8">
 
-                      <a href="" class="font-weight-bold px-2">{{$comment->userN}} </a>
-                      <span> - {{$comment->date}}</span>
-                    </div>
-                    <div class="col-sm-4">
 
-                      {{-- <form action="{{route('delete')}}" class="pl-5"  method="POST">
-                        <div class="form-inline">
-                          <input  type="hidden" value="{{$post->id}}" name="id">
-                        </div>
-                        
-                        <div class="form-inline">
-                          <button type="submit" class="btn btn-danger">Borrar</button>
-                        </div>
-      
-                        @csrf
-                      </form> --}}
-                    </div>
-                  </div>
+    var ENDPOINT = "{{route('home')}}";
+    var page = 1;
+  
+    /*------------------------------------------
+    --------------------------------------------
+    Call on Scroll
+    --------------------------------------------
+    --------------------------------------------*/
+    $(window).scroll(function () {
+        if ($(window).scrollTop() + $(window).height() >= ($(document).height() - 20)) {
+            page++;
+            infinteLoadMore(page);
+        }
+    });
+  
+    /*------------------------------------------
+    --------------------------------------------
+    call infinteLoadMore()
+    --------------------------------------------
+    --------------------------------------------*/
+    function infinteLoadMore(page) {
+        $.ajax({
+                url: ENDPOINT + "?page=" + page,
+                datatype: "html",
+                type: "get",
+                beforeSend: function () {
+                    $('.auto-load').show();
+                }
+            })
+            .done(function (response) {
+                if (response.html == '') {
+                    $('.auto-load').html("We don't have more data to display :(");
+                    return;
+                }
+  
+                $('.auto-load').hide();
+                $("#data-wrapper").append(response.html);
+            })
+            .fail(function (jqXHR, ajaxOptions, thrownError) {
+                console.log('Server error occured');
+            });
+    }
+
+
     
-                </div>
-                <div class="col-sm-12">
-                  <span class="text-justify" style="word-wrap:break-word;">{{$comment->text}}</span>
-
-                </div>
-              </div>
-            </div>
-            @endforeach
-
-      @php
-          
-          $c++;
-      @endphp
-
-    @endforeach
-      
+    
 
 
 
-      
+       
+
+    
+</script>
 @endsection
 

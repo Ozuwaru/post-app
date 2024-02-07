@@ -23,7 +23,8 @@ class Post extends Model
 
         public $CommentArr = array();
         public $userName;
-        public function addComments(Comment $c){
+        public $userImg;
+        public static function addComments(Comment $c){
             /**
              * al pasar el comentario tenemos que preparar el nombre del usuario,
              * comentario y el id del comentario para guardarlo en el objeto
@@ -35,11 +36,11 @@ class Post extends Model
             //dd($cID->name);
             $comentI = new CommentInfo($c->user_id,$c->text,$cID->name,$c->updated_at);
             //dd($comentI);
-            array_push($this->CommentArr,$comentI);
+            return $comentI;
         }
 
         public static function createPost(Request $request){
-           $post= new Post;
+            $post= new Post;
             $post->text = $request->text;
             $post->user_id= Auth::id();
             if($request->hasFile('img')){
@@ -78,7 +79,7 @@ class Post extends Model
         public static function getPosts($userid){
             //$posts= Post::where('user_id',$userid)->get();
 
-            $posts = Post::hydrate((DB::table('posts')
+            $posts = DB::table('posts')
                 ->select('id','text','imgPath','user_id','updated_at')
 
                 ->whereExists(function (Builder $query) use ($userid){
@@ -89,15 +90,19 @@ class Post extends Model
                     ->whereColumn('followers.following','posts.user_id');
 
                 })
-                ->orWhere('user_id','=',$userid)
+                ->orWhere('user_id','=',$userid)->paginate(10);
                 
-                ->get())->all());
-            //$posts = Post::hydrate($data->all());
-            // dd($posts);
-            foreach($posts as $post){
-                $post->userName = User::select('name')->where('id',$post->user_id)->pluck('name')->first();
-                ///dd($post->userName);
-            }
+                //$posts = Post::hydrate($posts->all());
+                foreach($posts as $post){
+                    $userData = User::select('name','imgPath')->where('id',$post->user_id)->first();
+                    //dd($userData);
+                    $post->userName = $userData->name;
+                    $post->userImg= $userData->imgPath;
+                    $post->comments = Comment::getCurrentPostComment(($post->id));
+                    
+                    ///dd($post->userName);
+                }
+                
             return $posts;
         }
 

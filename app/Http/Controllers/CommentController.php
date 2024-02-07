@@ -16,10 +16,21 @@ class CommentController extends Controller
      * para cargar los comentarios necesito buscar un chunk de comentarios segun el id del post
      * luego mostrarlos al mismo tiempo que se muestra el post
      */
-    public function saveComment(Request $request){
+    public function commentCreate(Request $request){
         //dd($request);
         Comment::createComment($request,Auth::id());
         return redirect()->intended('/');
         
+    }
+
+    public function commentDelete(Request $request){
+        Comment::deleteComment($request->id);
+        return redirect()->intended('/');
+
+    }
+    public function commentUpdate(Request $request){
+        Comment::updateComment($request->id,$request->text);
+        return redirect()->intended('/');
+
     }
 }
