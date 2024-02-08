@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Models\User;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
@@ -16,11 +17,12 @@ class userSeeder extends Seeder
      */
     public function run()
     {
-        DB::table('users')->insert([
+        $user= User::create([
             'name'=>"que pasaaaa",
             'email'=>'seeder@gmail.com',
             'password'=>Hash::make(123456789) ,
             'birthDate'=>'2003-01-01',
+            'imgPath'=>"/User/Images/M4DV15EQewqXyCSEuIzUPg28X7eRnXEshGqSTdoJ.jpg"
         ]);
     }
 }

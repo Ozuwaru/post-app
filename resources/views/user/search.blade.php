@@ -39,12 +39,7 @@
 
     var ENDPOINT = "{{route('search')}}";
     var page = 1;
-  
-    /*------------------------------------------
-    --------------------------------------------
-    Call on Scroll
-    --------------------------------------------
-    --------------------------------------------*/
+
     $(window).scroll(function () {
         if ($(window).scrollTop() + $(window).height() >= ($(document).height() - 20)) {
             page++;
@@ -52,11 +47,6 @@
         }
     });
   
-    /*------------------------------------------
-    --------------------------------------------
-    call infinteLoadMore()
-    --------------------------------------------
-    --------------------------------------------*/
     function infinteLoadMore(page) {
         $.ajax({
                 url: ENDPOINT + "?page=" + page,
@@ -68,7 +58,7 @@
             })
             .done(function (response) {
                 if (response.html == '') {
-                    $('.auto-load').html("We don't have more data to display :(");
+                    $('.auto-load').html("End of results.");
                     return;
                 }
   

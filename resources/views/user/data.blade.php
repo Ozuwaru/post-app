@@ -2,8 +2,8 @@
     $c=1;
 @endphp
 @foreach ($users as $user)
-<hr class="mt-2">
-<div class="card-body row" >
+<hr class="mt-1">
+<div class="card-body row my-2 py-1"  >
     <div class="col-2">
         <img src="" class="rounded img-fluid mb-3" alt="userImg" style="height:70px object-fit: cover; object-position: 50% 0;">
         
@@ -11,18 +11,18 @@
     </div>
         
 
-    <div class="col-8">
-        
-        <h5 class="title">
-            {{$user->name}}
-            {{$user->name}}
-            {{$user->name}}
-            {{$user->name}}
-            {{$user->name}}
-            {{$user->name}}
-            {{$user->name}}
-        </h5>
-        
+    <div class="col-sm-8 row">
+        <div class="col-sm-8">
+
+            <h5 class="title ">
+                <a href="{{route('view',['id'=>$user->id])}}" >{{$user->name}}</a>
+    
+                
+            </h5>
+            
+            <p class="font-weight-light">created {{\Carbon\Carbon::parse($user->created_at)->diffForHumans()}}</p>
+        </div>
+       
     </div>
 
     <div class="col-2">

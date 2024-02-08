@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Follower;
+use App\Models\Post;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -59,7 +60,6 @@ class UserController extends Controller
     public static function search(Request $request){
         //dd($request->search);
         $users =User::getUserToFollow(Auth::id(),$request->search);
-
         /**
          * Aqui debo ecribir un query el cual me va a devolver los usuarios que el usuario no 
          * haya agregado como amigos.
@@ -75,6 +75,16 @@ class UserController extends Controller
         
     }
 
-    
+    public function view($id,Request $request){
+        $user =User::find($id);
+        $posts= Post::getOwnPosts($id);
+
+        if($request->ajax()){
+            $view = view('homeData',['user'=>$user,'posts'=>$posts])->render();
+            return response()->json(['html'=>$view]);
+        }
+        
+        return view('user/view',['user'=>$user,'posts'=>$posts]);
+    }
 
 }

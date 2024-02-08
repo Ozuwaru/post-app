@@ -11,6 +11,7 @@ class Comment extends Model
     protected $fillable=[
         'text','post_id','user_id'
     ];
+    public $userImg;
 
     public function set(string $text,int $post_id, int $user_id)
     {
@@ -29,7 +30,9 @@ class Comment extends Model
     public static function getCurrentPostComment(int $Postid){
         $comments= Comment::select('id','user_id','text','updated_at')->where('post_id',$Postid)->get();
         foreach($comments as $comment){
-            $comment->userN = User::where('id', $comment->user_id)->select('name')->first()->name;
+            $userInfo = User::where('id', $comment->user_id)->select('name','imgPath')->first();
+            $comment->userN= $userInfo->name;
+            $comment->userImg = $userInfo->imgPath;
         }
         return $comments->all();
 

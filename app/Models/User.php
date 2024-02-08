@@ -79,7 +79,7 @@ class User extends Authenticatable
 
         if($name!=null){
 
-            $users = DB::table('users')
+            $users = DB::table('users')->select('id','name','email','created_at','updated_at','birthDate','imgPath')
                 ->where('name','LIKE',"%{$name}%")
                 ->whereNotExists(function (Builder $query) use ($id){
                     $query->select(DB::raw(1))
@@ -89,7 +89,7 @@ class User extends Authenticatable
                 })->paginate(10);
         }else{
 
-            $users = DB::table('users')
+            $users = DB::table('users')->select('id','name','email','created_at','updated_at','birthDate','imgPath')
                 ->whereNotExists(function (Builder $query) use ($id) {
                     $query->select(DB::raw(1))
                     ->from('followers')

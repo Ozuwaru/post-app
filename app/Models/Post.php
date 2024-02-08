@@ -105,6 +105,25 @@ class Post extends Model
                 
             return $posts;
         }
+        public static function getOwnPosts($userid){
+            //$posts= Post::where('user_id',$userid)->get();
+
+            $posts = DB::table('posts')
+                ->orWhere('user_id','=',$userid)->paginate(10);
+                
+                //$posts = Post::hydrate($posts->all());
+                foreach($posts as $post){
+                    $userData = User::select('name','imgPath')->where('id',$post->user_id)->first();
+                    //dd($userData);
+                    $post->userName = $userData->name;
+                    $post->userImg= $userData->imgPath;
+                    $post->comments = Comment::getCurrentPostComment(($post->id));
+                    
+                    ///dd($post->userName);
+                }
+                
+            return $posts;
+        }
 
         public static function deleteWithId(int $id){
             

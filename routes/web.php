@@ -24,6 +24,8 @@ Route::controller(UserController::class)->group(function(){
         return view('user/login');
     })->name('login');
 
+
+    Route::get('user/{id}','view')->whereNumber('id')->name('view');
 }); 
 
 Route::group(['middleware'=>'auth'],function(){

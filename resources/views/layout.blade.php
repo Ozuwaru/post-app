@@ -12,9 +12,8 @@
     <title>@yield('title')</title>
 </head>
 <body style="background-color: #ccc5b9">
-
     <nav class="navbar navbar-expand-lg navbar-dark " style="background-color: #403d39;">
-        <a class="navbar-brand p-0 b-0 " href="#">
+        <a class="navbar-brand my-0 py-0" href="{{route('home')}}">
             <span class="material-symbols-outlined">
                 gite
             </span>
@@ -34,9 +33,6 @@
 
           <ul class="navbar-nav ml-auto">
             
-            <li class="nav-item active">
-              <a class="nav-link" href="{{route('home')}}">Home <span class="sr-only">(current)</span></a>
-            </li>
 
             <li class="nav-item">
               <a class="nav-link" href="#">Link</a>
