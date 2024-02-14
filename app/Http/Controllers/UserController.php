@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Follower;
 use App\Models\Post;
 use App\Models\User;
 use Illuminate\Http\Request;
@@ -31,6 +30,12 @@ class UserController extends Controller
 
 
         return $this->authenticate($request);
+    }
+
+
+    public function update(Request $request){
+
+        return response()->json(['data'=>User::updateUser($request,204)]);
     }
 
 
@@ -78,7 +83,17 @@ class UserController extends Controller
     public function view($id,Request $request){
         $user =User::find($id);
         $posts= Post::getOwnPosts($id);
+        $sessionId= Auth::id();
+        if(
+            DB::table('followers')
+            ->where('followers.user_id',"{$sessionId}")
+            ->where('followers.following',"{$user->id}")->first()
+        ){
+                $user->followed= true;
+        }else{
+                $user->followed= false;
 
+        }
         if($request->ajax()){
             $view = view('homeData',['user'=>$user,'posts'=>$posts])->render();
             return response()->json(['html'=>$view]);

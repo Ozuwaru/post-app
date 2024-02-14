@@ -29,8 +29,8 @@ class CommentController extends Controller
 
     }
     public function commentUpdate(Request $request){
-        Comment::updateComment($request->id,$request->text);
-        return redirect()->intended('/');
+        $text = Comment::updateComment($request->id,$request->text);
+        return response()->json(['text'=>$text]);
 
     }
 }

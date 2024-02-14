@@ -22,6 +22,12 @@ class Comment extends Model
 
     public static function createComment(Request $request, int $user_id){
         $c= new Comment;
+        $rules=[
+            'comment'=>'required|string|max:255',
+            'post_id'=>'required|integer',
+
+        ];
+        $request->validate($rules);
         $c->set($request->comment,$request->post_id,$user_id);
         $c->save();
 
@@ -46,6 +52,7 @@ class Comment extends Model
         $comment = Comment::where('id',$id)->first();
         $comment->text = $text;
         $comment->save();
+        return $text;
     }
     use HasFactory;
 }

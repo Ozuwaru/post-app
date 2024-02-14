@@ -124,11 +124,34 @@
 
     
     
-
+    /*
+      Aqui escribiremos el resto del codigo que se encargará de 
+      manejar los eventos de forma asincrona, sin recargar la pantalla
+    */
 
 
        
+    $(".updateForm").on('submit',function(e){
+        e.preventDefault();
+        var formData=   new FormData(this);
+        $.ajax({
 
+            url:$(this).attr('action'),
+            type:"post",
+            data:formData,
+            cache: false,
+            contentType: false,
+            processData: false,
+            success:function (data,textStatus,xhr){
+                var id= '#'+formData.get('number')+'-text';
+                console.log(id)
+                $(id).text(data.text);
+                console.log($(id).get('id'));
+            }
+            
+        })
+        return false;
+    });
     
 </script>
 @endsection

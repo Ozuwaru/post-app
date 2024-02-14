@@ -80,7 +80,7 @@ class Post extends Model
             //$posts= Post::where('user_id',$userid)->get();
 
             $posts = DB::table('posts')
-                ->select('id','text','imgPath','user_id','updated_at')
+                ->select('id','text','imgPath','user_id','created_at')
 
                 ->whereExists(function (Builder $query) use ($userid){
 
@@ -129,7 +129,7 @@ class Post extends Model
             
             $post = Post::find($id);
 
-            if(Storage::exists('public'.$post->imgPath)){
+            if($post->imgPath!=null && Storage::exists('public'.$post->imgPath)){
                 Storage::delete('public'.$post->imgPath);
             }else if (Storage::exists('public'.$post->videoPath)){
                 

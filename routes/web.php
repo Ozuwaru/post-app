@@ -8,10 +8,11 @@ use Illuminate\Support\Facades\Route;
 
 
 Route::controller(UserController::class)->group(function(){
-    Route::post('save','save')->name('save');
+    Route::post('user/save','save')->name('save');
     
-    Route::post('update','update')->name('update');
-    Route::post('send','authenticate')->name('send');
+    Route::patch('user/update','update')->name('update');
+    Route::delete('user/delete','delete')->name('delete');
+    Route::post('user/send','authenticate')->name('send');
     Route::get('logout','logout')->name('logout');
     
     Route::get('register',function (){

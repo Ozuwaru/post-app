@@ -96,6 +96,8 @@
                 btn.classList.add('btn-success');
                 btn.innerHTML= "Followed";
             }
+
+            
            
         })
         .fail(function (response){

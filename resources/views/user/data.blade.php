@@ -5,7 +5,8 @@
 <hr class="mt-1">
 <div class="card-body row my-2 py-1"  >
     <div class="col-2">
-        <img src="" class="rounded img-fluid mb-3" alt="userImg" style="height:70px object-fit: cover; object-position: 50% 0;">
+        <img src="" class="rounded img-fluid mb-3" alt="userImg" 
+        style="height:70px object-fit: cover; object-position: 50% 0;">
         
         
     </div>
@@ -20,7 +21,12 @@
                 
             </h5>
             
-            <p class="font-weight-light">created {{\Carbon\Carbon::parse($user->created_at)->diffForHumans()}}</p>
+            <p class="font-weight-light">created 
+                {{\Carbon\Carbon::parse($user->created_at)->diffForHumans()}}</p>
+        </div>
+        <div class="col-sm-4">
+            <p><span class="followersCount">{{$user->followersCount}}</span> Followers</p>
+
         </div>
        
     </div>
@@ -36,17 +42,24 @@
             </div>
              
             <div class="form-inline">
-              <button type="submit" class="btn btn-warning follow_form" >Follow</button>
+              <button type="submit" class="btn  follow_form 
+              @if ($user->followed)
+                btn-success
+                @else
+                btn-warning
+              @endif" >
+                @if ($user->followed)
+                    followed
+                @else
+                    follow
+                @endif
+            </button>
             </div>
           
             @csrf
           </form>
         
     </div>
-        {{-- 
-    {{ $user->id }} 
-    <h5 class="card-title">{{ $user->name }}</h5>
-    {!! $user->email !!} --}}
 </div>
 @php
     $c++;
