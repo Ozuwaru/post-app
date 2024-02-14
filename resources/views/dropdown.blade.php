@@ -3,7 +3,7 @@
 <div class="{{$containerClass}}">
 
   <div class="dropdown">
-    <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+    <button class="btn btn-secondary dropdown-toggle dropdownMenuButton" type="button"  data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
       ...
     </button>
     <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
@@ -34,11 +34,11 @@
 </div>
 
 <!-- Modal -->
-<div class="modal fade" id="{{$c}}-update" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+<div class="modal fade" id="{{$c}}-update" tabindex="-1" role="dialog" aria-labelledby="ModalLabel" aria-hidden="true">
   <div class="modal-dialog" role="document">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLabel">Update your data:</h5>
+        <h5 class="modal-title" class="ModalLabel">Update your data:</h5>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>

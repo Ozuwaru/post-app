@@ -1,7 +1,4 @@
-@php
 
- $c=1;
-@endphp
     @foreach ( $posts->all() as $post)
    
         <div class=" post ">
@@ -15,7 +12,7 @@
             <div class="col-8">
               <a href="{{route('view',['id'=>$post->user_id])}}" class="font-weight-bold">{{$post->userName}}</a>
               <span>  -  {{ \Carbon\Carbon::parse($post->created_at)->diffForHumans()}}</span>
-              <p style="word-wrap:break-word;" id="{{$c}}-text">{{$post->text}}</p>
+              <p style="word-wrap:break-word;" id="{{$post->id}}-text">{{$post->text}}</p>
             </div>
 
 
@@ -28,7 +25,7 @@
                   'deleteRoute'=>'postDelete',
                   'updateRoute'=>'postUpdate',
                   'row'=>$post,
-                  'c'=>$c
+                  'c'=>$post->id
                 ])
               @endif
 
@@ -70,9 +67,6 @@
 
           </form>
           
-          @php
-                $iC=0;
-            @endphp
             @foreach ($post->comments as $comment)
             
             <div class="container row py-3 mx-auto justify-content-center" >
@@ -95,31 +89,24 @@
                           'deleteRoute'=>'commentDelete',
                           'updateRoute'=>'commentUpdate',
                           'row'=>$comment,
-                          'c'=>$c.'-'.$iC
+                          'c'=>$post->id.'-'.$comment->id
                         ])
                       @endif
 
     
                   </div>
                   <div class="col-sm-9">
-                    <span class="text-justify" style="word-wrap:break-word;"  id="{{$c}}-{{$iC}}-text">{{$comment->text}}</span>
+                    <span class="text-justify" style="word-wrap:break-word;"  id="{{$post->id}}-{{$comment->id}}-text">{{$comment->text}}</span>
 
                   </div>
                 </div>
               </div>
             </div>
         
-            @php
-                $iC++;
-            @endphp
             @endforeach 
 
         </div>
       </div>
-      @php
-          
-          $c++;
-      @endphp
     <hr class="my-4 mx-4">
 
     @endforeach

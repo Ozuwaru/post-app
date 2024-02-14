@@ -179,7 +179,7 @@
 
                               
             <div id="data-wrapper  " class=" rounded pt-3 pb-3 mx-auto g-0 " style="background-color: #F0DFBC">
-                @include('homeData',['user_id'=>$user->id])
+                @include('homeData',['user_id'=>$user->id,'c'=>1])
             </div>
                     <!-- Data Loader -->
         

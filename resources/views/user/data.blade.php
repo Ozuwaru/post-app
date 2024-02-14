@@ -1,11 +1,9 @@
-@php
-    $c=1;
-@endphp
+
 @foreach ($users as $user)
 <hr class="mt-1">
 <div class="card-body row my-2 py-1"  >
     <div class="col-2">
-        <img src="" class="rounded img-fluid mb-3" alt="userImg" 
+        <img src="{{asset('storage/'.$user->imgPath)}}" class="rounded img-fluid mb-3" alt="userImg" 
         style="height:70px object-fit: cover; object-position: 50% 0;">
         
         
@@ -37,7 +35,7 @@
   
   
             <div class="form-inline">
-              <input type="number" value="{{$user->id}}" hidden name="id">
+              <input type="hidden" value="{{$user->id}}"  name="id">
               
             </div>
              
@@ -61,7 +59,5 @@
         
     </div>
 </div>
-@php
-    $c++;
-@endphp
+
 @endforeach
