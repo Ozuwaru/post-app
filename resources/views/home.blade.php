@@ -22,14 +22,7 @@
         <div class="form-group row">
           <label for="img" class="col-sm-2 col-form-label">Image: </label>
           <div class="col-sm-10">
-            <input type="file" class="form-control"  name="img" id="img_path">
-
-          </div>
-        </div>
-        <div class="form-group row">
-          <label for="video" class="col-sm-2 col-form-label">Video: </label>
-          <div class="col-sm-10">
-            <input type="file" class="form-control" name="video" id="video_path">
+            <input type="file" class="form-control"  name="img" id="img_path"  >
 
           </div>
         </div>
@@ -129,7 +122,10 @@
       manejar los eventos de forma asincrona, sin recargar la pantalla
     */
 
-
+      /*  
+      this code allows us to edit the comments, the posts data is not updated,
+      i don't really know the reason for that, i've tried to fix it, but is still not working
+    */
        
     $(".updateForm").on('submit',function(e){
         e.preventDefault();

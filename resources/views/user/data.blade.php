@@ -4,7 +4,8 @@
 <div class="card-body row my-2 py-1"  >
     <div class="col-2">
         <img src="{{asset('storage/'.$user->imgPath)}}" class="rounded img-fluid mb-3" alt="userImg" 
-        style="height:70px object-fit: cover; object-position: 50% 0;">
+        style="width: 300px; height: 70px; object-fit: cover; object-position: 50% 0;">
+        
         
         
     </div>
@@ -22,15 +23,15 @@
             <p class="font-weight-light">created 
                 {{\Carbon\Carbon::parse($user->created_at)->diffForHumans()}}</p>
         </div>
-        <div class="col-sm-4">
-            <p><span class="followersCount">{{$user->followersCount}}</span> Followers</p>
+        {{-- <div class="col-sm-4">
+            <p><span class="followersCount" id="{{$user->id}}Count">{{$user->followersCount}}</span> Followers</p>
 
-        </div>
+        </div> --}}
        
     </div>
 
     <div class="col-2">
-        <form  method="POST" name="followForm" action="{{ route('follow') }}" >
+        <form  method="POST" name="followForm" action="{{ route('follow') }}" id="{{$user->id}}">
         {{-- <form action="{{route('follow')}}"  method="POST"> --}}
   
   
@@ -45,7 +46,7 @@
                 btn-success
                 @else
                 btn-warning
-              @endif" >
+              @endif"  >
                 @if ($user->followed)
                     followed
                 @else

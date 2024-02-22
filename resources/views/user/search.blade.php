@@ -77,15 +77,19 @@
         e.preventDefault();
         var myForm = $(this).closest('form');
         // console.log(myForm);
+        var count = $(this).closest('followersCount');
+
         $.ajax({
             url:myForm.attr('action'),
             type:"post",
             data:myForm.serialize()
         
         })
+
         .done(function (data,textStatus,xhr){
             //Aqui debemos cambiar la clase y atributos del boton
             const btn = e.target;
+
             if(textStatus=='nocontent'){
 
                 btn.classList.remove('btn-success');
@@ -95,6 +99,8 @@
                 btn.classList.remove('btn-warning');
                 btn.classList.add('btn-success');
                 btn.innerHTML= "Followed";
+
+                count.innerHTML +=1;
             }
 
             
@@ -112,3 +118,4 @@
     
 </script>
 @endsection
+

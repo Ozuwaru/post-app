@@ -1,8 +1,9 @@
 
     @foreach ( $posts->all() as $post)
-   
-        <div class=" post ">
-          <div class="row container justify-content-center">
+
+
+        <div class=" post" id="{{$post->id}}">
+          <div class="row container justify-content-center" >
 
             <div class="col-2">
               <img src="{{asset('storage/'.$post->userImg)}}" class="rounded img-fluid mb-3" alt="userImg" style="width: 300px; height: 70px; object-fit: cover; object-position: 50% 0;">
@@ -24,6 +25,7 @@
                   'containerClass'=>'box',
                   'deleteRoute'=>'postDelete',
                   'updateRoute'=>'postUpdate',
+                  'imgRoute'=>'imgUpdate',
                   'row'=>$post,
                   'c'=>$post->id
                 ])
@@ -31,6 +33,9 @@
 
               
             </div>
+
+
+            
 
 
           </div>
@@ -43,19 +48,16 @@
               
             </div>  
           @endif
+          
 
+          <div class="row justify-content-around mt-3">
+            <a href="#link" class="btn btn-info col-4" role="button">Like</a>
+            <a href="#link" class="btn btn-info col-4" role="button">Dislike</a>
+          </div>
 
           <form action="{{route('commentCreate')}}" method="POST" enctype="multipart/form-data">
 
             <div class="form-group row pt-4 mx-auto">
-{{--               
-              <div class="col-sm-2 ">
-
-                {{-- //<img src="{{asset('storage/'.$post->imgPath)}}" class="rounded pt-1" alt="userImg" style="object-fit: cover;"> --}}
-              {{-- <img src="{{asset('storage/'.$post->userImg)}}"  class="rounded img-fluid" alt="userImg" style="width: 3pz; height: 5pz; object-fit: cover; object-position: 50% 0;"> 
-
-
-              </div> --}}
               <div class="col-sm-12  py-auto mx-auto">
 
                   <input  type="hidden" value="{{$post->id}}" name="post_id">
@@ -69,7 +71,7 @@
           
             @foreach ($post->comments as $comment)
             
-            <div class="container row py-3 mx-auto justify-content-center" >
+            <div class="container row py-3 mx-auto justify-content-center" id="{{$post->id}}-{{$comment->id}}">
               <div class="col-sm-2">
                 <img src="{{asset('storage/'.$comment->userImg)}}"   class="rounded img-fluid mb-3" alt="userImg" style="width: 100%; height: 70px; object-fit: cover; object-position: 50% 0;">
 
@@ -88,6 +90,7 @@
                           'containerClass'=>'col-sm-1',
                           'deleteRoute'=>'commentDelete',
                           'updateRoute'=>'commentUpdate',
+
                           'row'=>$comment,
                           'c'=>$post->id.'-'.$comment->id
                         ])
@@ -106,7 +109,6 @@
             @endforeach 
 
         </div>
-      </div>
     <hr class="my-4 mx-4">
 
     @endforeach

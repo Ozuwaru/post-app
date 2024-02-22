@@ -46,10 +46,10 @@ class Post extends Model
             if($request->hasFile('img')){
                $post->imgPath= Post::storeUploads($request);
                 //dd("hay archivo");
-            }else if($request->hasFile('video')){
+            }/*else if($request->hasFile('video')){
                 $post->videoPath= Post::storeUploads($request);
                 
-            }
+            }*/
            // dd("no hay archivo");
             $post->save();
 
@@ -66,10 +66,10 @@ class Post extends Model
         public static function storeUploads(Request $request){
             if($request->hasFile('img')){
                 $path= $request->file('img')->store('public/Images');
-            }else if($request->hasFile('video')){
-                $path= $request->file('video')->store('Videos');
+            }/*else if($request->hasFile('video')){
+            //     $path= $request->file('video')->store('Videos');
                 
-            }
+            // }*/
             $path = str_replace('public','',$path);
             return $path;
         }
@@ -120,8 +120,7 @@ class Post extends Model
                     $post->comments = Comment::getCurrentPostComment(($post->id));
                     
                     ///dd($post->userName);
-                }
-                
+                }                
             return $posts;
         }
 

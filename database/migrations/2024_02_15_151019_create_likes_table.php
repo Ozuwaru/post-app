@@ -13,11 +13,10 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::table('comments', function (Blueprint $table) {
-                $table->unsignedBigInteger('post_id');
-                $table->foreign('post_id')
-                    ->references('id')->on('posts')
-                    ->onDelete('cascade');
+        Schema::create('likes', function (Blueprint $table) {
+            $table->id();
+            $table->boolean('isLike');
+            $table->timestamps();
         });
     }
 
@@ -28,9 +27,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::table('comments', function (Blueprint $table) {
-            $table->dropForeign('comments_post_id_foreign');
-            
-        });
+        Schema::dropIfExists('likes');
     }
 };

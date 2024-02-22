@@ -8,7 +8,7 @@
     </button>
     <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
 
-      <form action="{{route($deleteRoute)}}"  method="post" id="form{{$c}}" class="deleteForm">
+      <form action="{{route($deleteRoute)}}"  method="post" id="form{{$c}}" class="deleteForm ">
         @csrf
         @method('delete')
       
@@ -25,6 +25,11 @@
         Edit
       </button>
       
+      @isset($imgRoute)
+        <button type="button" class="dropdown-item" data-toggle="modal" data-target="#{{$c}}-update">
+          Edit
+        </button>
+      @endisset
     </div>
   </div>
 
