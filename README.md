@@ -9,8 +9,9 @@ STEPS TO LOAD THE APP IN YOUR LOCAL PC:
 
 2- Use an app like xampp to locally run the app.
 
+3-Set all of your enviroment variables on the ENV file, like your databese name, your db ip. the port, etc.
 
-3- On the console opened in the app folder, run "php artisan migrate" to run the database tables.
+4- On the console opened in the app folder, run "php artisan migrate" to run the database tables.
 
 After all of this i think you should be able to load the page, feel free to contact me for any trouble
 or any useful info, upgrades or wathever, have a great day 🍟🏺🎇🎇🎇.
