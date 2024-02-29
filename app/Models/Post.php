@@ -56,11 +56,94 @@ class Post extends Model
             return $post;
         }
 
-        public static function updateText(Request $request){
-            $post = Post::where('id',$request->id)->get()->first();
-            //dd($post);
-            $post->text = $request->text;
+        public static function updateData(Request $request){    
+            $credentials='';
+            /**
+             * 1 is for the text
+             * 4 is for the img
+             */
+            $post= Post::find($request->id);
+            switch($request->option){
+
+                case 1:{
+                    $credentials = ['text'=>'required|string|max:255'];
+                    $property='text';
+                    break;
+                }
+                
+                case 4:{
+
+                    $credentials = ['imgPath'=>'required|mimes:jpeg,png'];
+                    $property='imgPath';
+
+                    
+                    break;
+                }
+            }
+
+            $credentials = $request->validate($credentials);
+
+
+
+/**
+ * if($request->hasFile('img')){
+            if( $user->imgPath!=null)
+                Storage::disk('public')->delete($user->imgPath);
+            $finalD= $request->file('img')->store('public/User/Images');
+            
+            $finalD = str_replace('public','',$finalD);
+        }
+
+
+
+        $user->{$property}= $finalD;
+        
+        $user->save();
+        if($request->option==3){
+            return 0;
+        }
+
+        if($request->option==4){
+            $property='img';
+            $finalD= asset('storage/'.$finalD);
+        }
+ */
+
+
+
+
+            
+            $finalD= $request->{$property};
+
+
+            
+            if($request->hasFile('imgPath')){
+                
+                if( $post->imgPath!=null)
+                    Storage::disk('public')->delete($post->imgPath);
+                $finalD= $request->file('imgPath')->store('public/Images');
+                
+                $finalD = str_replace('public','',$finalD);
+
+            }
+            //dd($finalD);
+
+            $post->{$property}= $finalD;
+            
             $post->save();
+
+            if($request->option==4){
+                $property='img';
+
+                $finalD= asset('storage'.$finalD);
+            }
+
+            $property = str_replace('Path','',$property);
+            return response()->json(
+                ['property'=>$property,
+                    'value'=>$finalD,
+                    'id'=>$request->idToChange,
+                    'user'=>false]);
         }
         
         public static function storeUploads(Request $request){

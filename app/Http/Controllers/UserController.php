@@ -35,7 +35,7 @@ class UserController extends Controller
 
     public function update(Request $request){
 
-        return response()->json(['data'=>User::updateUser($request,204)]);
+        return User::updateUser($request);
     }
 
 

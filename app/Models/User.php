@@ -4,6 +4,7 @@ namespace App\Models;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
 
+use Hamcrest\Core\AllOf;
 use Illuminate\Http\Request;
 
 use Illuminate\Contracts\Database\Query\Builder;
@@ -113,6 +114,7 @@ class User extends Authenticatable
     }
 
     public static function updateUser(Request $request){
+        //dd($request->all());
         $credentials='';
         /**
          * 1 is for the username
@@ -183,9 +185,12 @@ class User extends Authenticatable
             $finalD= asset('storage/'.$finalD);
         }
         $property = str_replace('Path','',$property);
-        return [
+
+        return response()->json([
                 'property'=>$property,
-                'value'=>$finalD];
+                'value'=>$finalD,
+                'id'=>$request->id.'-',
+                'user'=>true]);
     }
 
 

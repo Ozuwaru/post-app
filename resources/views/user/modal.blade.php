@@ -27,8 +27,9 @@
                   
               @endif
               <input  type="hidden" value="{{$option}}" name="option">
+              
+              <input  type="hidden" value="{{$buttonName}}" name="idToChange">
               <input  type="hidden" value="{{$id}}" name="id">
-
           </div>
           <div class="modal-footer">
             <button type="button" class="btn btn-secondary" data-dismiss="modal" class="close">Close</button>

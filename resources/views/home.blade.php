@@ -61,7 +61,7 @@
 </div>
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
-<script>
+<script type="text/javascript">
 
 
 
@@ -127,7 +127,7 @@
       i don't really know the reason for that, i've tried to fix it, but is still not working
     */
        
-    $(".updateForm").on('submit',function(e){
+    $(".formUpdate").on('submit',function(e){
         e.preventDefault();
         var formData=   new FormData(this);
         $.ajax({
@@ -139,10 +139,24 @@
             contentType: false,
             processData: false,
             success:function (data,textStatus,xhr){
-                var id= '#'+formData.get('number')+'-text';
-                console.log(id)
-                $(id).text(data.text);
-                console.log($(id).get('id'));
+                console.log(data)
+                var id= data.id
+                  id= id.replace('update','');
+                  id = id.replace('Img','');
+                  prop = 'postImg';
+
+                if(data.property=== "text"){
+
+                  
+                  console.log('#'+id+'text')
+                  $('#'+id+'text').text(data.value);
+                }else{
+                  console.log('#'+id+'img')
+
+                  //$('#'+id+'img').attr("src",data.value);
+                  $('.'+id+prop).attr("src",data.value);
+                  
+                }
             }
             
         })

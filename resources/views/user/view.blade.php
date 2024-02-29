@@ -6,14 +6,14 @@
         <div class="row">
 
             <div class="col-sm-2">
-                <img src="{{asset('storage/'.$user->imgPath)}}" class="rounded img-fluid mb-3" id="imgInfo" alt="userImg" style="width: 300px; height: 70px; object-fit: cover; object-position: 50% 0;">
+                <img src="{{asset('storage/'.$user->imgPath)}}" class="rounded img-fluid mb-3 {{$user->id}}-userImg"  alt="userImg" style="width: 300px; height: 70px; object-fit: cover; object-position: 50% 0;">
 
             </div>
             
 
             <div class="col-sm-8">
 
-                <h3 class="title " id="nameInfo">{{$user->name}}</h3>
+                <h3 class="title {{$user->id}}-userName" >{{$user->name}}</h3>
                 <p id="emailInfo">{{$user->email}}</p>
                 @if ($errors->any())
                     <div class="alert alert-failure">
@@ -39,20 +39,8 @@
                             </button>
                             <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
                         
-                                <form action="{{route('delete')}}"  method="post" id="form{{$user->id}}">
-                                @csrf
-                                @method('delete')
                                 
-                                <div class="form-inline">
-                                    <input  type="hidden" value="{{$user->id}}" name="id">
-                                    
-                                </div>
-                                
-                                
-                                <button type="submit" class="dropdown-item" data-toggle="modal" data-target="#{{$user->id}}">
-                                    Delete
                                 </button>
-                                </form>
                         
                                 <button type="button" class="dropdown-item" data-toggle="modal" data-target="#updateName">
                                     Edit Name
@@ -70,9 +58,7 @@
 
                                 <button type="button" class="dropdown-item" data-toggle="modal" 
                                 data-target="#updatePassword">
-                                    Edit Password
-                                </button>
-                                
+                                    Edit Password</button>
                             </div>
                         </div>
                     
@@ -179,7 +165,7 @@
 
                               
             <div id="data-wrapper  " class=" rounded pt-3 pb-3 mx-auto g-0 " style="background-color: #F0DFBC">
-                @include('homeData',['user_id'=>$user->id,'c'=>1])
+                @include('homeData',['user_id'=>$user->id])
             </div>
                     <!-- Data Loader -->
         
@@ -262,7 +248,7 @@
     $(".formUpdate").on('submit',function(e){
         e.preventDefault();
         var formData=   new FormData(this);
-
+        console.log("funciona nojoda");
         $.ajax({
 
             url:$(this).attr('action'),
@@ -272,22 +258,64 @@
             contentType: false,
             processData: false,
             success:function (data,textStatus,xhr){
-                //console.log(data)
-                var element = $('#'+data.data.property+'Info');
-                if(data.data.property!='img'){
-                    
-                    element.text(data.data.value);
+
+                /**
+                 * CODIGO PARA FORMULARIOS EDITANDO VAINAS
+                 * 
+                 * 
+                 */
+               console.log(data)
+                var id= data.id;
+                var prop ='';
+                if(data.user==false){
+                    id= id.replace('update','');
+                    id = id.replace('Img','');
+                    if(data.property=='img'){
+                        prop = 'postImg';
+                    }else{
+                        prop='text';
+                    }
                 }else{
-                    element.attr('src',data.data.value);
+                    if(data.property=='img'){
+                        prop = 'userImg';
+                    }else{
+                        prop='userName';
+                    }
+
                 }
-                var closeBtn= $(this).closest('.close');
-                closeBtn.click();
+               if(data.property!= "img" ){
+
+
+
+                   console.log('#'+id+prop)
+                   if(data.user==true){
+
+                       $('.'+id+prop).text ( data.value);
+                   }else{
+
+                       $('#'+id+prop).text ( data.value);
+                   }
+               }else{
+                //    if(data.user==true){
+                //        $('.'+id+'userImg').attr("src",data.value);
+                       
+                //     }else{
+                        
+                        
+                //     }
+                    
+                    $('.'+id+prop).attr("src",data.value);
+                }
+
+
             }
             
         })
         return false;
     });
         
+
+
     $(document).on('click',".follow_form",function(e){
         
         e.preventDefault();
@@ -312,6 +340,9 @@
                 btn.classList.add('btn-success');
                 btn.innerHTML= "Followed";
             }
+
+
+
            
         })
         .fail(function (response){

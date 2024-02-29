@@ -30,7 +30,7 @@ class CommentController extends Controller
     }
     public function commentUpdate(Request $request){
         $text = Comment::updateComment($request->id,$request->text);
-        return response()->json(['text'=>$text]);
+        return response()->json(['text'=>$text,'property'=>'text','id'=>$request->idToChange]);
 
     }
 }

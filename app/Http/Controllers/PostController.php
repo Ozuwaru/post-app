@@ -7,6 +7,7 @@ use App\Models\Post;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Validation\Rules\File;
 
 class PostController extends Controller
@@ -35,11 +36,12 @@ class PostController extends Controller
     }
 
     public function update(Request $request){
-        $request->validate(['text'=>'string']);
-        Post::updateText($request);
-        return redirect('');
-        //dd($request);
+        return Post::updateData($request) ;
+
     }
+
+
+
     
     public function delete(Request $request){
         Post::deleteWithId($request->id);
@@ -50,7 +52,7 @@ class PostController extends Controller
     public function load(Request $request){
         
             $posts= Post::getPosts(Auth::id());
-           // dd($user);
+           // dd($post);
             if($request->ajax()){
                 $view = view('homeData',['user_id'=>Auth::id(),'posts'=>$posts])->render();
                 return response()->json(['html'=>$view]);
