@@ -50,10 +50,6 @@
           @endif
           
 
-          <div class="row justify-content-around mt-3">
-            <a href="#link" class="btn btn-info col-4" role="button">Like</a>
-            <a href="#link" class="btn btn-info col-4" role="button">Dislike</a>
-          </div>
 
           <form action="{{route('commentCreate')}}" method="POST" enctype="multipart/form-data">
 
