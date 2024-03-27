@@ -16,5 +16,5 @@ STEPS TO LOAD THE APP IN YOUR LOCAL PC:
 After all of this i think you should be able to load the page, feel free to contact me for any trouble
 or any useful info, upgrades or wathever, have a great day 🍟🏺🎇🎇🎇.
 
-Here is the page hosted, there may be a problem with security, since it's a free host, so don't send any important or real data.
+Here is the page hosted, there may be a problem with security, since it's a free host, so don't send any important or real data. <br>
 https://post-app-production.up.railway.app/
